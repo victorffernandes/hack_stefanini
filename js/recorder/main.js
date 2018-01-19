@@ -20,12 +20,20 @@ var audioInput = null,
     realAudioInput = null,
     inputPoint = null,
     audioRecorder = null;
-var rafID = null;
-var analyserContext = null;
-var canvasWidth, canvasHeight;
-var recIndex = 0;
-
-/* TODO:
+    var rafID = null;
+    var analyserContext = null;
+    var canvasWidth, canvasHeight;
+    var recIndex = 0;
+    var url = "https://speech.platform.bing.com/speech/recognition/conversation/cognitiveservices/v1?language=pt-BR&format=simple"
+    
+    var headers = {
+        "method":"POST",
+        "Ocp-Apim-Subscription-Key":"dd32435150304cf0863b99cc3f16e702",
+        "Content-type":"audio/wav; codec=audio/pcm; samplerate=16000",
+        "Transfer-Encoding":"chunked"
+    }
+    
+    /* TODO:
 
 - offer mono option
 - "Monitor input" switch
@@ -37,11 +45,10 @@ function saveAudio() {
     // audioRecorder.exportMonoWAV( doneEncoding );
 }
 
+
 function gotBuffers( buffers ) {
-    var canvas = document.getElementById( "wavedisplay" );
 
     drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffers[0] );
-
     // the ONLY time gotBuffers is called is right after a new recording is completed - 
     // so here's where we should set up the download.
     audioRecorder.exportWAV( doneEncoding );
